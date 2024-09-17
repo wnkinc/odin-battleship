@@ -31,9 +31,7 @@ const Gameboard = () => {
   const missedShots = [];
 
   // Initialize the board with null values
-  const board = Array(boardSize)
-    .fill(null)
-    .map(() => Array(boardSize).fill(null));
+  const board = Array(boardSize).map(() => Array(boardSize).fill(null));
 
   function placeShip(ship, startX, startY, direction) {
     if (direction === "horizontal") {
@@ -78,3 +76,5 @@ const Gameboard = () => {
     },
   };
 };
+
+export { Ship, Gameboard };
