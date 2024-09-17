@@ -29,9 +29,9 @@ const Gameboard = () => {
   const boardSize = 10; // You can adjust this size as needed
   const ships = [];
   const missedShots = [];
-
-  // Initialize the board with null values
-  const board = Array(boardSize).map(() => Array(boardSize).fill(null));
+  const board = Array(boardSize)
+    .fill(null)
+    .map(() => Array(boardSize).fill(null));
 
   function placeShip(ship, startX, startY, direction) {
     if (direction === "horizontal") {
@@ -67,6 +67,10 @@ const Gameboard = () => {
     return ships.every((ship) => ship.sunk);
   }
 
+  function getBoard() {
+    return board;
+  }
+
   return {
     placeShip,
     receiveAttack,
@@ -74,6 +78,7 @@ const Gameboard = () => {
     get missedShots() {
       return missedShots;
     },
+    getBoard,
   };
 };
 

@@ -33,25 +33,42 @@ describe("Ship Factory", () => {
 });
 
 describe("Gameboard", () => {
+  test("initialize board with correct dimensions", () => {
+    const gameboard = Gameboard();
+    const boardSize = 10;
+
+    const board = gameboard.getBoard();
+
+    expect(board.length).toBe(boardSize); // Check the number of rows
+    board.forEach((row) => {
+      expect(row.length).toBe(boardSize); // Check the number of columns
+      row.forEach((cell) => {
+        expect(cell).toBeNull();
+      });
+    });
+  });
+
   test("placeShip horizontally", () => {
     const gameboard = Gameboard();
     const ship = Ship(3);
 
     gameboard.placeShip(ship, 0, 0, "horizontal");
+    const board = gameboard.getBoard();
 
-    expect(gameboard.board[0][0]).toBe(ship);
-    expect(gameboard.board[0][1]).toBe(ship);
-    expect(gameboard.board[0][2]).toBe(ship);
+    expect(board[0][0]).toBe(ship);
+    expect(board[0][1]).toBe(ship);
+    expect(board[0][2]).toBe(ship);
   });
 
-  test("should place ship vertically", () => {
+  test("placeShip vertically", () => {
     const gameboard = Gameboard();
     const ship = Ship(3); // Create a ship using the Ship factory
 
     gameboard.placeShip(ship, 0, 0, "vertical");
+    const board = gameboard.getBoard();
 
-    expect(gameboard.board[0][0]).toBe(ship);
-    expect(gameboard.board[1][0]).toBe(ship);
-    expect(gameboard.board[2][0]).toBe(ship);
+    expect(board[0][0]).toBe(ship);
+    expect(board[1][0]).toBe(ship);
+    expect(board[2][0]).toBe(ship);
   });
 });
