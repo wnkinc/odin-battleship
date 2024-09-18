@@ -84,15 +84,31 @@ const Gameboard = () => {
   };
 };
 
-const Player = (isComputer = false) => {
+const Player = () => {
   const gameboard = Gameboard();
 
   function attack(opponentGameboard, x, y) {
     return opponentGameboard.receiveAttack(x, y); // Attacks opponent's gameboard
   }
 
+  // Random attack function for computer players
+  function randomAttack(opponentGameboard) {
+    let x;
+    let y;
+    do {
+      x = Math.floor(Math.random() * 10);
+      y = Math.floor(Math.random() * 10);
+    } while (
+      opponentGameboard.getBoard()[x][y] !== null &&
+      opponentGameboard.getBoard()[x][y] !== "hit"
+    );
+    return opponentGameboard.receiveAttack(x, y); // Computer attacks a random square
+  }
+
   return {
+    gameboard,
     attack,
+    randomAttack,
   };
 };
 

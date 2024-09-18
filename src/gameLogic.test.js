@@ -90,11 +90,25 @@ describe("Gameboard", () => {
 
     expect(board[0][0]).toBe("hit");
   });
+});
 
-  test("real Player attack", () => {
-    const player = Player();
-    const opponent = Player();
+describe("Player attack logic", () => {
+  let player, opponentGameboard;
 
-    player.attack(opponent, 0, 0);
+  beforeEach(() => {
+    player = Player(); // Create a player instance
+    opponentGameboard = Gameboard(); // Create a mock of opponent's gameboard
+
+    opponentGameboard.receiveAttack = jest.fn(); // Mock the receiveAttack function
+  });
+
+  test("attacks the opponent at the correct coordinates", () => {
+    const x = 3;
+    const y = 4;
+
+    player.attack(opponentGameboard, x, y); // Call the attack function
+
+    // Check that the receiveAttack function was called with correct coordinates
+    expect(opponentGameboard.receiveAttack).toHaveBeenCalledWith(x, y);
   });
 });
