@@ -62,7 +62,7 @@ describe("Gameboard", () => {
 
   test("placeShip vertically", () => {
     const gameboard = Gameboard();
-    const ship = Ship(3); // Create a ship using the Ship factory
+    const ship = Ship(3);
 
     gameboard.placeShip(ship, 0, 0, "vertical");
     const board = gameboard.getBoard();
@@ -70,5 +70,24 @@ describe("Gameboard", () => {
     expect(board[0][0]).toBe(ship);
     expect(board[1][0]).toBe(ship);
     expect(board[2][0]).toBe(ship);
+  });
+
+  test("receiveAttack missedShots", () => {
+    const gameboard = Gameboard();
+
+    gameboard.receiveAttack(0, 0);
+    const missedShots = gameboard.getMissedShots();
+    expect(missedShots).toEqual([[0, 0]]);
+  });
+
+  test("receiveAttack hit", () => {
+    const gameboard = Gameboard();
+    const ship = Ship(3);
+
+    gameboard.placeShip(ship, 0, 0, "vertical");
+    gameboard.receiveAttack(0, 0);
+    const board = gameboard.getBoard();
+
+    expect(board[0][0]).toBe("hit");
   });
 });

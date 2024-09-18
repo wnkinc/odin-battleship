@@ -71,13 +71,15 @@ const Gameboard = () => {
     return board;
   }
 
+  function getMissedShots() {
+    return missedShots;
+  }
+
   return {
     placeShip,
     receiveAttack,
     allShipsSunk,
-    get missedShots() {
-      return missedShots;
-    },
+    getMissedShots,
     getBoard,
   };
 };
