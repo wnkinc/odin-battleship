@@ -84,4 +84,16 @@ const Gameboard = () => {
   };
 };
 
-export { Ship, Gameboard };
+const Player = (isComputer = false) => {
+  const gameboard = Gameboard();
+
+  function attack(opponentGameboard, x, y) {
+    return opponentGameboard.receiveAttack(x, y); // Attacks opponent's gameboard
+  }
+
+  return {
+    attack,
+  };
+};
+
+export { Ship, Gameboard, Player };

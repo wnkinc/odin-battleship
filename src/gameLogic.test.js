@@ -1,4 +1,4 @@
-import { Ship, Gameboard } from "./gameLogic"; // Adjust the path if needed
+import { Ship, Gameboard, Player } from "./gameLogic"; // Adjust the path if needed
 
 describe("Ship Factory", () => {
   test("initializes with correct length and zero hits", () => {
@@ -89,5 +89,12 @@ describe("Gameboard", () => {
     const board = gameboard.getBoard();
 
     expect(board[0][0]).toBe("hit");
+  });
+
+  test("real Player attack", () => {
+    const player = Player();
+    const opponent = Player();
+
+    player.attack(opponent, 0, 0);
   });
 });
