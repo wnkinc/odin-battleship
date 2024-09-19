@@ -49,7 +49,6 @@ const Gameboard = () => {
   function receiveAttack(x, y) {
     const target = board[x][y];
 
-    console.log("1or2");
     if (target === null) {
       missedShots.push([x, y]); // Track missed shots
       board[x][y] = "miss";
@@ -104,7 +103,6 @@ const Player = () => {
       opponentGameboard.getBoard()[x][y] === "hit" ||
       opponentGameboard.getBoard()[x][y] === "miss"
     );
-    console.log(`${x} ${y}`);
     return opponentGameboard.receiveAttack(x, y); // Computer attacks a random square
   }
 

@@ -7,7 +7,7 @@ import { Ship, Gameboard, Player } from "./gameLogic.js";
 function createBoard(boardElement) {
   for (let i = 0; i < 10; i += 1) {
     for (let j = 0; j < 10; j += 1) {
-      const cell = document.createElement("div");
+      const cell = document.createElement("button");
       cell.dataset.x = i;
       cell.dataset.y = j;
       cell.classList.add("cell");
@@ -16,15 +16,12 @@ function createBoard(boardElement) {
   }
 }
 
-// Get the player and computer board elements
 const playerBoardElement = document.getElementById("player-board");
 const computerBoardElement = document.getElementById("computer-board");
 
-// Create 10x10 grids for both boards
 createBoard(playerBoardElement);
 createBoard(computerBoardElement);
 
-// Initialize players
 const player = Player();
 const computer = Player();
 
@@ -54,7 +51,23 @@ function updateBoardUI(boardElement, gameboard) {
 
 // Handle player's attack on computer's board
 computerBoardElement.addEventListener("click", (e) => {
-  const { x, y } = e.target.dataset;
+  // Check if a button with data-x and data-y attributes was clicked
+  const target = e.target;
+  if (!target || !target.dataset.x || !target.dataset.y) {
+    console.log("Clicked outside of valid button area");
+    return;
+  }
+
+  // Check if the cell has already been attacked (hit or miss)
+  if (target.classList.contains("hit") || target.classList.contains("miss")) {
+    console.log("You've already attacked this cell!");
+    return;
+  }
+
+  // Extract the x and y coordinates from the dataset
+  const { x, y } = target.dataset;
+
+  // Handle player's attack on the computer's board
   const result = player.attack(
     computer.gameboard,
     parseInt(x, 10),
@@ -62,22 +75,21 @@ computerBoardElement.addEventListener("click", (e) => {
   );
 
   if (result === "hit") {
-    e.target.classList.add("hit");
+    target.classList.add("hit");
   } else if (result === "miss") {
-    e.target.classList.add("miss");
+    target.classList.add("miss");
   }
 
-  // Check if all ships are sunk
   if (computer.gameboard.allShipsSunk()) {
     alert("You win!");
-  } else if (player.gameboard.allShipsSunk()) {
-    alert("You win!");
-  } else {
-    // Computer's turn to attack
-    console.log("comp attack");
-    console.log(computer.randomAttack(player.gameboard));
-    console.table(player.gameboard.getBoard());
-    console.table(computer.gameboard.getBoard());
-    updateBoardUI(playerBoardElement, player.gameboard);
+    return;
+  }
+
+  // Computer's turn to attack
+  computer.randomAttack(player.gameboard);
+  updateBoardUI(playerBoardElement, player.gameboard);
+
+  if (player.gameboard.allShipsSunk()) {
+    alert("You Lose!");
   }
 });
