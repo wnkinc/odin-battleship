@@ -40,7 +40,7 @@ h2 {
   gap: 2px;
 }
 
-.grid div.cell {
+div.cell {
   width: 40px;
   height: 40px;
   background-color: #5bc0de;
@@ -52,6 +52,9 @@ h2 {
   background-color: #337ab7;
 }
 
-.grid div.hit {
-  background-color: #d9534f; /* Hit cells will turn red */
+.cell.hit {
+  background-color: red;
+}
+.cell.miss {
+  background-color: darkblue;
 }
