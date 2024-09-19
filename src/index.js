@@ -36,6 +36,22 @@ const computerShip = Ship(3);
 player.gameboard.placeShip(playerShip, 0, 0, "horizontal");
 computer.gameboard.placeShip(computerShip, 0, 0, "horizontal");
 
+// Function to update the UI based on the board state
+function updateBoardUI(boardElement, gameboard) {
+  const cells = boardElement.querySelectorAll(".cell");
+  cells.forEach((cell) => {
+    const x = parseInt(cell.dataset.x, 10);
+    const y = parseInt(cell.dataset.y, 10);
+    const boardValue = gameboard.getBoard()[x][y];
+
+    if (boardValue === "hit") {
+      cell.classList.add("hit");
+    } else if (boardValue === "miss") {
+      cell.classList.add("miss");
+    }
+  });
+}
+
 // Handle player's attack on computer's board
 computerBoardElement.addEventListener("click", (e) => {
   const { x, y } = e.target.dataset;
@@ -54,9 +70,14 @@ computerBoardElement.addEventListener("click", (e) => {
   // Check if all ships are sunk
   if (computer.gameboard.allShipsSunk()) {
     alert("You win!");
+  } else if (player.gameboard.allShipsSunk()) {
+    alert("You win!");
   } else {
     // Computer's turn to attack
     console.log("comp attack");
-    computer.randomAttack(player.gameboard);
+    console.log(computer.randomAttack(player.gameboard));
+    console.table(player.gameboard.getBoard());
+    console.table(computer.gameboard.getBoard());
+    updateBoardUI(playerBoardElement, player.gameboard);
   }
 });

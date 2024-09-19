@@ -49,8 +49,10 @@ const Gameboard = () => {
   function receiveAttack(x, y) {
     const target = board[x][y];
 
+    console.log("1or2");
     if (target === null) {
       missedShots.push([x, y]); // Track missed shots
+      board[x][y] = "miss";
       return "miss";
     }
     if (typeof target === "object") {
@@ -96,12 +98,11 @@ const Player = () => {
     let x;
     let y;
     do {
-      console.log("reach?");
       x = Math.floor(Math.random() * 10);
       y = Math.floor(Math.random() * 10);
     } while (
-      opponentGameboard.getBoard()[x][y] !== null &&
-      opponentGameboard.getBoard()[x][y] !== "hit"
+      opponentGameboard.getBoard()[x][y] === "hit" ||
+      opponentGameboard.getBoard()[x][y] === "miss"
     );
     console.log(`${x} ${y}`);
     return opponentGameboard.receiveAttack(x, y); // Computer attacks a random square
