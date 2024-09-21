@@ -25,13 +25,6 @@ createBoard(computerBoardElement);
 const player = Player();
 const computer = Player();
 
-// Place ships for both player and computer
-const playerShip1 = Ship(2);
-const playerShip2 = Ship(3);
-const playerShip3 = Ship(3);
-const playerShip4 = Ship(5);
-const playerShip5 = Ship(6);
-
 const computerShip1 = Ship(2);
 const computerShip2 = Ship(3);
 const computerShip3 = Ship(3);
@@ -76,15 +69,27 @@ function canPlaceShip(board, ship, startX, startY, direction) {
   return true;
 }
 
-randomShipPlacement(player.gameboard, playerShip5);
-randomShipPlacement(player.gameboard, playerShip4);
+// Add event listeners to each ship div
+document.querySelectorAll(".ships-container .ship").forEach((shipElement) => {
+  shipElement.addEventListener("click", () => {
+    const shipLength = parseInt(shipElement.dataset.length, 10);
+    const ship = Ship(shipLength);
+
+    // Place the ship on the player's board
+    randomShipPlacement(player.gameboard, ship);
+
+    // Optionally, remove the ship from the ship container to indicate it's placed
+    shipElement.classList.add("placed");
+    updateBoardUI(playerBoardElement, player.gameboard);
+    shipElement.removeEventListener("click", () => {}); // Disable further clicks
+  });
+});
 
 randomShipPlacement(computer.gameboard, computerShip5);
 randomShipPlacement(computer.gameboard, computerShip4);
-
-// // Example: placing ships manually
-// player.gameboard.placeShip(playerShip, 0, 0, "horizontal");
-// computer.gameboard.placeShip(computerShip, 0, 0, "horizontal");
+randomShipPlacement(computer.gameboard, computerShip3);
+randomShipPlacement(computer.gameboard, computerShip2);
+randomShipPlacement(computer.gameboard, computerShip1);
 
 // Function to update the UI based on the board state
 function updateBoardUI(boardElement, gameboard) {
@@ -94,7 +99,9 @@ function updateBoardUI(boardElement, gameboard) {
     const y = parseInt(cell.dataset.y, 10);
     const boardValue = gameboard.getBoard()[x][y];
 
-    if (boardValue === "hit") {
+    if (typeof boardValue === "object" && boardValue !== null) {
+      cell.classList.add("ship");
+    } else if (boardValue === "hit") {
       cell.classList.add("hit");
     } else if (boardValue === "miss") {
       cell.classList.add("miss");
@@ -117,7 +124,6 @@ computerBoardElement.addEventListener("click", (e) => {
     return;
   }
 
-  // Extract the x and y coordinates from the dataset
   const { x, y } = target.dataset;
 
   // Handle player's attack on the computer's board
@@ -142,6 +148,7 @@ computerBoardElement.addEventListener("click", (e) => {
   computer.randomAttack(player.gameboard);
   console.table(player.gameboard.getBoard());
   console.table(computer.gameboard.getBoard());
+  console.log(player.gameboard.getBoard());
   updateBoardUI(playerBoardElement, player.gameboard);
 
   if (player.gameboard.allShipsSunk()) {

@@ -35,8 +35,8 @@ h2 {
 
 .grid {
   display: grid;
-  grid-template-columns: repeat(10, 40px); /* 10 columns */
-  grid-template-rows: repeat(10, 40px); /* 10 rows */
+  grid-template-columns: repeat(10, 40px);
+  grid-template-rows: repeat(10, 40px);
   gap: 2px;
 }
 
@@ -52,9 +52,54 @@ button.cell {
   background-color: #337ab7;
 }
 
-.cell.hit {
+.grid .cell.hit {
   background-color: red;
 }
-.cell.miss {
+
+.grid .cell.miss {
   background-color: darkblue;
+}
+
+.cell.ship {
+  background-color: green;
+}
+
+/* Styles for ships container */
+.ships-container {
+  margin-top: 20px;
+  display: flex;
+  gap: 10px;
+}
+
+/* Vertical ship styling */
+.ship {
+  width: 40px;
+  background-color: green;
+  border: 1px solid #000;
+  cursor: pointer;
+}
+
+#ship-2 {
+  height: calc(2 * 40px);
+}
+
+#ship-3-1,
+#ship-3-2 {
+  height: calc(3 * 40px);
+}
+
+#ship-5 {
+  height: calc(5 * 40px);
+}
+
+#ship-6 {
+  height: calc(6 * 40px);
+}
+
+.ship:hover {
+  background-color: #337ab7;
+}
+
+.ships-container .ship.placed {
+  display: none;
 }

@@ -1,18 +1,18 @@
-import { Ship, Gameboard, Player } from "./gameLogic"; // Adjust the path if needed
+import { Ship, Gameboard, Player } from "./gameLogic";
 
 describe("Ship Factory", () => {
   test("initializes with correct length and zero hits", () => {
     const ship = Ship(3);
-    expect(ship.length).toBe(3); // Length should be 3
-    expect(ship.hits).toBe(0); // Hits should start at 0
-    expect(ship.sunk).toBe(false); // Ship should not be sunk initially
+    expect(ship.length).toBe(3);
+    expect(ship.hits).toBe(0);
+    expect(ship.sunk).toBe(false);
   });
 
   test("hit() increments hits count", () => {
     const ship = Ship(3);
     ship.hit();
-    expect(ship.hits).toBe(1); // After one hit, hits should be 1
-    expect(ship.sunk).toBe(false); // Ship should not be sunk after one hit
+    expect(ship.hits).toBe(1);
+    expect(ship.sunk).toBe(false);
   });
 
   test("ship is sunk after receiving hits equal to its length", () => {
@@ -20,15 +20,15 @@ describe("Ship Factory", () => {
     ship.hit();
     ship.hit();
     ship.hit();
-    expect(ship.hits).toBe(3); // After 3 hits, hits should be equal to length
-    expect(ship.sunk).toBe(true); // Ship should be sunk after 3 hits
+    expect(ship.hits).toBe(3);
+    expect(ship.sunk).toBe(true);
   });
 
   test("ship does not sink before receiving enough hits", () => {
     const ship = Ship(3);
     ship.hit();
     ship.hit();
-    expect(ship.sunk).toBe(false); // Ship should not be sunk after 2 hits
+    expect(ship.sunk).toBe(false);
   });
 });
 
@@ -39,9 +39,9 @@ describe("Gameboard", () => {
 
     const board = gameboard.getBoard();
 
-    expect(board.length).toBe(boardSize); // Check the number of rows
+    expect(board.length).toBe(boardSize);
     board.forEach((row) => {
-      expect(row.length).toBe(boardSize); // Check the number of columns
+      expect(row.length).toBe(boardSize);
       row.forEach((cell) => {
         expect(cell).toBeNull();
       });
@@ -96,7 +96,7 @@ describe("Player attack logic", () => {
   let player, opponentGameboard;
 
   beforeEach(() => {
-    player = Player(); // Create a player instance
+    player = Player();
     opponentGameboard = Gameboard(); // Create a mock of opponent's gameboard
 
     opponentGameboard.receiveAttack = jest.fn(); // Mock the receiveAttack function
@@ -106,9 +106,8 @@ describe("Player attack logic", () => {
     const x = 3;
     const y = 4;
 
-    player.attack(opponentGameboard, x, y); // Call the attack function
+    player.attack(opponentGameboard, x, y);
 
-    // Check that the receiveAttack function was called with correct coordinates
     expect(opponentGameboard.receiveAttack).toHaveBeenCalledWith(x, y);
   });
 });

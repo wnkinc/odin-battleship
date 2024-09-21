@@ -26,7 +26,7 @@ const Ship = (length) => {
 };
 
 const Gameboard = () => {
-  const boardSize = 10; // You can adjust this size as needed
+  const boardSize = 10;
   const ships = [];
   const missedShots = [];
   const board = Array(boardSize)
@@ -55,8 +55,8 @@ const Gameboard = () => {
       return "miss";
     }
     if (typeof target === "object") {
-      target.hit(); // Call ship's hit function
-      board[x][y] = "hit"; // Mark as hit
+      target.hit();
+      board[x][y] = "hit";
       return "hit";
     }
 
@@ -89,7 +89,7 @@ const Player = () => {
   const gameboard = Gameboard();
 
   function attack(opponentGameboard, x, y) {
-    return opponentGameboard.receiveAttack(x, y); // Attacks opponent's gameboard
+    return opponentGameboard.receiveAttack(x, y);
   }
 
   // Random attack function for computer players
@@ -103,7 +103,7 @@ const Player = () => {
       opponentGameboard.getBoard()[x][y] === "hit" ||
       opponentGameboard.getBoard()[x][y] === "miss"
     );
-    return opponentGameboard.receiveAttack(x, y); // Computer attacks a random square
+    return opponentGameboard.receiveAttack(x, y);
   }
 
   return {
