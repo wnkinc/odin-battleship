@@ -1,3 +1,3 @@
-# Odin-template
+# odin-battleship
 
-LIVE PREVIEW - http://wnkinc.github.io/Odin-template
+LIVE PREVIEW - http://wnkinc.github.io/odin-battleship
